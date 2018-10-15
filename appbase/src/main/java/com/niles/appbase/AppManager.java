@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.Utils;
 import com.niles.http.HttpConfig;
 import com.niles.http.HttpManager;
+import com.niles.http.converter.StringConverterFactory;
 import com.orhanobut.hawk.Hawk;
 
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -40,8 +41,8 @@ public class AppManager {
                         }
                     }
                 })
+                .addConverterFactory(StringConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-//                .addConverterFactory(StringConverterFactory.create())
                 .build());
 
         Hawk.init(app).build();
