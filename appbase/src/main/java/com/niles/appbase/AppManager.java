@@ -4,12 +4,13 @@ import android.app.Application;
 import android.util.Log;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.blankj.utilcode.util.Utils;
 import com.niles.http.HttpConfig;
 import com.niles.http.HttpManager;
-import com.niles.http.converter.StringConverterFactory;
 import com.orhanobut.hawk.Hawk;
 
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Niles
@@ -39,7 +40,8 @@ public class AppManager {
                         }
                     }
                 })
-                .addConverterFactory(StringConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+//                .addConverterFactory(StringConverterFactory.create())
                 .build());
 
         Hawk.init(app).build();
@@ -49,6 +51,8 @@ public class AppManager {
             ARouter.openDebug();
         }
         ARouter.init(app);
+
+        Utils.init(app);
     }
 
     public static AppManager getInstance() {
