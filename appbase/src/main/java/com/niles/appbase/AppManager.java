@@ -63,11 +63,11 @@ public class AppManager {
         return sInstance;
     }
 
-    public static void init(Application app, boolean isDebug) {
+    public static AppManager init(Application app, boolean isDebug) {
         if (sInstance != null) {
             throw new RuntimeException("Init Once");
         }
-        sInstance = new AppManager(app, isDebug);
+        return sInstance = new AppManager(app, isDebug);
     }
 
     public boolean isDebug() {

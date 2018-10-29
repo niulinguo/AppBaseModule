@@ -1,8 +1,12 @@
 package com.niles.appbasemodule;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.niles.appbase.AppManager;
+import com.niles.http.HttpManager;
+
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Created by Niles
@@ -14,6 +18,17 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AppManager.init(this, BuildConfig.DEBUG);
+        AppManager appManager = AppManager.init(this, BuildConfig.DEBUG);
+        HttpManager httpManager = appManager.getHttpManager();
+        httpManager.setHttpConfig(httpManager.getHttpConfig()
+                .newBuilder()
+                .setBaseUrl("http://www.wanandroid.com")
+                .setLogger(new HttpLoggingInterceptor.Logger() {
+                    @Override
+                    public void log(String message) {
+                        Log.e("http", message);
+                    }
+                })
+                .build());
     }
 }
