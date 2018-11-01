@@ -2,7 +2,7 @@ package com.niles.appbase;
 
 import android.app.Application;
 
-import com.niles.appbase.loading.LoadingConfig;
+import com.niles.appbase.ui.loading.LoadingConfig;
 import com.niles.http.HttpConfig;
 
 /**

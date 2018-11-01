@@ -1,4 +1,4 @@
-package com.niles.appbase.loading;
+package com.niles.appbase.ui.loading;
 
 import com.kingja.loadsir.callback.Callback;
 
@@ -15,7 +15,7 @@ public class LoadingConfig {
     private final List<Callback> mCallbacks;
     private final Class<? extends Callback> mDefaultCallback;
 
-    public LoadingConfig(List<Callback> callbacks, Class<? extends Callback> defaultCallback) {
+    private LoadingConfig(List<Callback> callbacks, Class<? extends Callback> defaultCallback) {
         mCallbacks = callbacks;
         mDefaultCallback = defaultCallback;
     }

@@ -4,7 +4,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.Utils;
 import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadSir;
-import com.niles.appbase.loading.LoadingConfig;
+import com.niles.appbase.ui.loading.LoadingConfig;
 import com.niles.http.HttpManager;
 import com.orhanobut.hawk.Hawk;
 

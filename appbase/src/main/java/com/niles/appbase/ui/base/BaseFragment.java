@@ -1,10 +1,11 @@
-package com.niles.appbase.fragment;
+package com.niles.appbase.ui.base;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
-import com.kingja.loadsir.callback.Callback;
-import com.niles.appbase.mvp.BaseView;
+import com.blankj.utilcode.util.ToastUtils;
+import com.niles.appbase.BuildConfig;
 
 import java.util.HashMap;
 
@@ -13,10 +14,10 @@ import java.util.HashMap;
  * Date 2018/10/29 17:11
  * Email niulinguo@163.com
  */
-public class BaseFragment extends Fragment implements ActivityCall, BaseView {
+public class BaseFragment<P extends BasePresenter> extends Fragment implements ActivityCall, BaseView {
 
     private FragmentCallback mFragmentCallback;
-    private BaseView mParentBaseView;
+    private P mPresenter;
 
     @Override
     public void onAttach(Context context) {
@@ -24,9 +25,15 @@ public class BaseFragment extends Fragment implements ActivityCall, BaseView {
         if (context instanceof FragmentCallback) {
             mFragmentCallback = (FragmentCallback) context;
         }
-        if (context instanceof BaseView) {
-            mParentBaseView = (BaseView) context;
-        }
+        mPresenter = createPresenter();
+    }
+
+    protected P getPresenter() {
+        return mPresenter;
+    }
+
+    protected P createPresenter() {
+        return null;
     }
 
     protected Object fragmentCallback(String method, HashMap<String, Object> params) {
@@ -42,30 +49,14 @@ public class BaseFragment extends Fragment implements ActivityCall, BaseView {
     }
 
     @Override
-    public void showLoading(Class<? extends Callback> callback) {
-        if (mParentBaseView != null) {
-            mParentBaseView.showLoading(callback);
-        }
-    }
-
-    @Override
-    public void hideLoading() {
-        if (mParentBaseView != null) {
-            mParentBaseView.hideLoading();
-        }
-    }
-
-    @Override
     public void toast(String msg) {
-        if (mParentBaseView != null) {
-            mParentBaseView.toast(msg);
-        }
+        ToastUtils.showShort(msg);
     }
 
     @Override
     public void log(String tag, String msg) {
-        if (mParentBaseView != null) {
-            mParentBaseView.log(tag, msg);
+        if (BuildConfig.DEBUG) {
+            Log.i(tag, msg);
         }
     }
 }

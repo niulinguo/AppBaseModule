@@ -1,4 +1,4 @@
-package com.niles.appbase.fragment;
+package com.niles.appbase.ui.base;
 
 import java.util.HashMap;
 

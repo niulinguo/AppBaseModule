@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.niles.appbase.fragment.BaseFragment;
+import com.niles.appbase.ui.base.BaseFragment;
 
 import java.util.HashMap;
 
@@ -42,7 +42,7 @@ public class MainFragment extends BaseFragment {
     }
 
     @Override
-    public Object onActivityCall(String method, HashMap<String, Object> params) {
+    public Object onActivityCall(String method, HashMap params) {
         mTextView.setText(String.format("%s来自Activity的回调:%s\n", mTextView.getText().toString(), method));
         return "爸爸，我收到了你说的:" + method;
     }

@@ -1,4 +1,4 @@
-package com.niles.appbase.activity;
+package com.niles.appbase.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,15 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.kingja.loadsir.callback.Callback;
-import com.kingja.loadsir.core.LoadService;
-import com.kingja.loadsir.core.LoadSir;
-import com.niles.appbase.AppManager;
 import com.niles.appbase.BuildConfig;
-import com.niles.appbase.fragment.ActivityCall;
-import com.niles.appbase.fragment.FragmentCallback;
-import com.niles.appbase.mvp.BaseView;
-import com.niles.http.HttpManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,20 +18,26 @@ import java.util.List;
  * Date 2018/10/29 17:03
  * Email niulinguo@163.com
  */
-public class BaseActivity extends AppCompatActivity implements FragmentCallback, BaseView {
+public class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements FragmentCallback, BaseView {
 
     private BaseActivity mActivity;
-    private HttpManager mHttpManager;
     private FragmentManager mFragmentManager;
-    private LoadSir mLoadSir;
-    private LoadService mLoadService;
+    private P mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = this;
-        mHttpManager = AppManager.getInstance().getHttpManager();
         mFragmentManager = getSupportFragmentManager();
+        mPresenter = createPresenter();
+    }
+
+    protected P createPresenter() {
+        return null;
+    }
+
+    protected P getPresenter() {
+        return mPresenter;
     }
 
     protected Object callFragment(String method, HashMap<String, Object> params) {
@@ -59,10 +57,6 @@ public class BaseActivity extends AppCompatActivity implements FragmentCallback,
         return result;
     }
 
-    public HttpManager getHttpManager() {
-        return mHttpManager;
-    }
-
     protected BaseActivity thisActivity() {
         return mActivity;
     }
@@ -70,27 +64,6 @@ public class BaseActivity extends AppCompatActivity implements FragmentCallback,
     @Override
     public Object onFragmentCallback(String method, HashMap<String, Object> params) {
         return null;
-    }
-
-    @Override
-    public void showLoading(Class<? extends Callback> callback) {
-        if (mLoadService == null) {
-            mLoadService = getLoadSir().register(this);
-        } else {
-            if (callback == null) {
-                Class<? extends Callback> defaultCallback = AppManager.getInstance().getAppConfig().getLoadingConfig().getDefaultCallback();
-                mLoadService.showCallback(defaultCallback);
-            } else {
-                mLoadService.showCallback(callback);
-            }
-        }
-    }
-
-    @Override
-    public void hideLoading() {
-        if (mLoadService != null) {
-            mLoadService.showSuccess();
-        }
     }
 
     @Override
@@ -103,16 +76,5 @@ public class BaseActivity extends AppCompatActivity implements FragmentCallback,
         if (BuildConfig.DEBUG) {
             Log.i(tag, msg);
         }
-    }
-
-    protected final LoadSir getLoadSir() {
-        if (mLoadSir == null) {
-            mLoadSir = createLoadSir();
-        }
-        return mLoadSir;
-    }
-
-    protected LoadSir createLoadSir() {
-        return LoadSir.getDefault();
     }
 }

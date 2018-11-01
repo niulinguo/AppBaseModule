@@ -1,6 +1,4 @@
-package com.niles.appbase.mvp;
-
-import com.kingja.loadsir.callback.Callback;
+package com.niles.appbase.ui.base;
 
 /**
  * Created by Niles
@@ -8,10 +6,6 @@ import com.kingja.loadsir.callback.Callback;
  * Email niulinguo@163.com
  */
 public interface BaseView {
-
-    void showLoading(Class<? extends Callback> callback);
-
-    void hideLoading();
 
     void toast(String msg);
 

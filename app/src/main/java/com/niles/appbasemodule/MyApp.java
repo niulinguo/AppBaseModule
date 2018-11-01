@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.niles.appbase.AppConfig;
 import com.niles.appbase.AppManager;
-import com.niles.appbase.loading.LoadingConfig;
+import com.niles.appbase.ui.loading.LoadingConfig;
 import com.niles.appbasemodule.loading.CustomCallback;
 import com.niles.appbasemodule.loading.EmptyCallback;
 import com.niles.appbasemodule.loading.ErrorCallback;
