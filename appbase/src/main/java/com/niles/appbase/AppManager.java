@@ -1,17 +1,14 @@
 package com.niles.appbase;
 
-import android.app.Application;
-import android.util.Log;
-
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.Utils;
-import com.niles.http.HttpConfig;
+import com.kingja.loadsir.callback.Callback;
+import com.kingja.loadsir.core.LoadSir;
+import com.niles.appbase.loading.LoadingConfig;
 import com.niles.http.HttpManager;
-import com.niles.http.converter.StringConverterFactory;
 import com.orhanobut.hawk.Hawk;
 
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.List;
 
 /**
  * Created by Niles
@@ -20,40 +17,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class AppManager {
 
-    private static final String TAG = "AppManager";
-
     private static AppManager sInstance;
-    private final Application mApp;
-    private final boolean mIsDebug;
+    private final AppConfig mAppConfig;
 
     private final HttpManager mHttpManager = new HttpManager();
 
-    private AppManager(Application app, final boolean isDebug) {
-        mApp = app;
-        mIsDebug = isDebug;
-
-        mHttpManager.setHttpConfig(new HttpConfig.Builder()
-                .setLogger(new HttpLoggingInterceptor.Logger() {
-                    @Override
-                    public void log(String message) {
-                        if (isDebug) {
-                            Log.e(TAG, message);
-                        }
-                    }
-                })
-                .addConverterFactory(StringConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build());
-
-        Hawk.init(app).build();
-
-        if (isDebug) {
+    private AppManager(AppConfig appConfig) {
+        mAppConfig = appConfig;
+        mHttpManager.setHttpConfig(appConfig.getHttpConfig());
+        Hawk.init(mAppConfig.getApp()).build();
+        if (mAppConfig.isDebug()) {
             ARouter.openLog();
             ARouter.openDebug();
         }
-        ARouter.init(app);
-
-        Utils.init(app);
+        ARouter.init(mAppConfig.getApp());
+        Utils.init(mAppConfig.getApp());
+        initLoading(appConfig.getLoadingConfig());
     }
 
     public static AppManager getInstance() {
@@ -63,19 +42,25 @@ public class AppManager {
         return sInstance;
     }
 
-    public static AppManager init(Application app, boolean isDebug) {
+    public static AppManager init(AppConfig appConfig) {
         if (sInstance != null) {
             throw new RuntimeException("Init Once");
         }
-        return sInstance = new AppManager(app, isDebug);
+        return sInstance = new AppManager(appConfig);
     }
 
-    public boolean isDebug() {
-        return mIsDebug;
+    private void initLoading(LoadingConfig loadingConfig) {
+        List<Callback> callbacks = loadingConfig.getCallbacks();
+        LoadSir.Builder builder = LoadSir.beginBuilder();
+        for (Callback callback : callbacks) {
+            builder.addCallback(callback);
+        }
+        builder.setDefaultCallback(loadingConfig.getDefaultCallback());
+        builder.commit();
     }
 
-    public Application app() {
-        return mApp;
+    public AppConfig getAppConfig() {
+        return mAppConfig;
     }
 
     public HttpManager getHttpManager() {

@@ -21,7 +21,7 @@
 #-renamesourcefileattribute SourceFile
 
 
-#### ARouter
+# ARouter {
 -keep public class com.alibaba.android.arouter.routes.**{*;}
 -keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
 
@@ -35,3 +35,9 @@
 -keepnames class * {
     @com.alibaba.android.arouter.facade.annotation.Autowired <fields>;
 }
+# ARouter }
+
+# LoadSir {
+-dontwarn com.kingja.loadsir.**
+-keep class com.kingja.loadsir.** {*;}
+# LoadSir }

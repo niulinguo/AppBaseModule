@@ -25,9 +25,11 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         mTextView = findViewById(R.id.tv_activity_text);
 
+        showLoading(null);
         getHttpManager().getService(ApiService.class).test().enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                hideLoading();
                 JsonObject body = response.body();
                 if (body != null) {
                     String msg = body.get("msg").getAsString();
@@ -37,7 +39,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-
+                hideLoading();
             }
         });
     }
