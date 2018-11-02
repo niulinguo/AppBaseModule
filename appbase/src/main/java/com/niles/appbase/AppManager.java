@@ -70,4 +70,8 @@ public class AppManager {
     public <S> S getService(Class<S> service) {
         return ARouter.getInstance().navigation(service);
     }
+
+    public Object getService(String path) {
+        return ARouter.getInstance().build(path).navigation();
+    }
 }
