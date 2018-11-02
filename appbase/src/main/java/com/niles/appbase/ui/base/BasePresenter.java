@@ -8,4 +8,6 @@ package com.niles.appbase.ui.base;
 public interface BasePresenter<V extends BaseView> {
 
     V getView();
+
+    void start();
 }

@@ -23,6 +23,13 @@ class LoadingDemoPresenter extends BaseLoadingPresenterImpl<BaseLoadingView> {
     }
 
     @Override
+    public void start() {
+        super.start();
+        getView().showLoading(null);
+        loadData(false);
+    }
+
+    @Override
     public void loadData(final boolean reload) {
         new Handler().postDelayed(new Runnable() {
             @Override

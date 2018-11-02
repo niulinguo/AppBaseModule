@@ -11,8 +11,7 @@ public class LoadingDemoActivity extends BaseLoadingActivity<LoadingDemoPresente
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_demo);
-        showLoading(null);
-        getPresenter().loadData(false);
+        getPresenter().start();
     }
 
     @Override
@@ -21,12 +20,12 @@ public class LoadingDemoActivity extends BaseLoadingActivity<LoadingDemoPresente
     }
 
     @Override
-    public void onLoadSuccess(Object... obj) {
+    public void onLoadSuccess(Object... objs) {
 
     }
 
     @Override
-    public void onLoadFailure(Object... obj) {
+    public void onLoadFailure(Object... objs) {
 
     }
 }

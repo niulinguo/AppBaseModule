@@ -17,4 +17,9 @@ public class BasePresenterImpl<V extends BaseView> implements BasePresenter<V> {
     public V getView() {
         return mView;
     }
+
+    @Override
+    public void start() {
+
+    }
 }

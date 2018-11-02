@@ -14,7 +14,7 @@ public interface BaseLoadingView extends BaseView {
 
     void hideLoading();
 
-    void onLoadSuccess(Object... obj);
+    void onLoadSuccess(Object... objs);
 
-    void onLoadFailure(Object... obj);
+    void onLoadFailure(Object... objs);
 }
