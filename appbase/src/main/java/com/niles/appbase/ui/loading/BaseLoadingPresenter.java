@@ -13,4 +13,6 @@ public interface BaseLoadingPresenter<V extends BaseLoadingView> extends BasePre
     void loadData(boolean reload);
 
     HttpManager getHttpManager();
+
+    LoaderProvider getLoaderProvider();
 }

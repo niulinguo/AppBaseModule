@@ -6,14 +6,9 @@ import android.util.Log;
 
 import com.niles.appbase.AppConfig;
 import com.niles.appbase.AppManager;
-import com.niles.appbase.ui.loading.LoadingConfig;
-import com.niles.appbasemodule.loading.CustomCallback;
-import com.niles.appbasemodule.loading.EmptyCallback;
-import com.niles.appbasemodule.loading.ErrorCallback;
-import com.niles.appbasemodule.loading.LoadingCallback;
-import com.niles.appbasemodule.loading.TimeoutCallback;
 import com.niles.http.HttpConfig;
 import com.niles.http.converter.StringConverterFactory;
+import com.niles.loading.LoadingManager;
 
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -43,14 +38,7 @@ public class MyApp extends Application {
                         .addConverterFactory(StringConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())
                         .build())
-                .setLoadingConfig(new LoadingConfig.Builder()
-                        .addCallback(new ErrorCallback())
-                        .addCallback(new EmptyCallback())
-                        .addCallback(new LoadingCallback())
-                        .addCallback(new TimeoutCallback())
-                        .addCallback(new CustomCallback())
-                        .setDefaultCallback(LoadingCallback.class)
-                        .build())
+                .setLoadingConfig(LoadingManager.createLoadingConfig())
                 .build());
     }
 }

@@ -24,4 +24,9 @@ public class BaseLoadingPresenterImpl<V extends BaseLoadingView> extends BasePre
     public HttpManager getHttpManager() {
         return AppManager.getInstance().getHttpManager();
     }
+
+    @Override
+    public LoaderProvider getLoaderProvider() {
+        return (LoaderProvider) AppManager.getInstance().getService("/loading/service/loader");
+    }
 }

@@ -48,11 +48,11 @@ class LoadingDemoPresenter extends BaseLoadingPresenterImpl<BaseLoadingView> {
 
                         @Override
                         public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                            getView().showLoading(ErrorCallback.class);
+                            getView().showLoading(getLoaderProvider().error());
                         }
                     });
                 } else {
-                    getView().showLoading(TimeoutCallback.class);
+                    getView().showLoading(getLoaderProvider().timeout());
                 }
             }
         }, 3000);
